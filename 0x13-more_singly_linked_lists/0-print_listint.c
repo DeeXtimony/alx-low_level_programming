@@ -9,12 +9,12 @@
  */
 size_t print_listint(const listint_t *h)
 {
-size_t nodes = 0;
+size_t bestnodes = 0;
 for (; h != NULL; h = h->next)
 {
-nodes++;
+bestnodes++;
 printf("%d\n", h->n);
 }
 
-return (nodes);
+return (bestnodes);
 }
