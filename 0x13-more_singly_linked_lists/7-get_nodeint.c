@@ -9,23 +9,15 @@
  * Return: If the node does not exist - NULL.
  *         Otherwise - the located node.
  */
-
 listint_t *get_nodeint_at_index(listint_t *head, unsigned int index)
 {
-unsigned int node = 0;
-
-while (node < index)
+unsigned int alxnode = 0;
+while (alxnode < index)
 {
-switch (head == NULL)
-{
-case true:
+if (head == NULL)
 return (NULL);
-case false:
 head = head->next;
-node++;
-break;
+alxnode++;
 }
-}
-
 return (head);
 }
