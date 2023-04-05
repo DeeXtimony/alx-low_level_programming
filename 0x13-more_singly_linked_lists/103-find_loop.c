@@ -1,5 +1,4 @@
 #include "lists.h"
-
 /**
  * find_listint_loop - Finds the loop contained in
  *                     a listint_t linked list.
@@ -10,32 +9,33 @@
  */
 listint_t *find_listint_loop(listint_t *head)
 {
-	listint_t *tortoise, *hare;
+	listint_t *slow, *fast;
 
 	if (head == NULL || head->next == NULL)
 		return (NULL);
 
-	tortoise = head->next;
-	hare = (head->next)->next;
+	slow = head->next;
+	fast = (head->next)->next;
 
-	while (hare)
+	for (; fast != NULL;)
 	{
-		if (tortoise == hare)
+		if (slow == fast)
 		{
-			tortoise = head;
+			slow = head;
 
-			while (tortoise != hare)
+			for (; slow != fast;)
 			{
-				tortoise = tortoise->next;
-				hare = hare->next;
+				slow = slow->next;
+				fast = fast->next;
 			}
 
-			return (tortoise);
+			return (slow);
 		}
 
-		tortoise = tortoise->next;
-		hare = (hare->next)->next;
+		slow = slow->next;
+		fast = (fast->next)->next;
 	}
 
 	return (NULL);
 }
+
