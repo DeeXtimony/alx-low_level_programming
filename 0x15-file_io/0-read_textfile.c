@@ -1,26 +1,23 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
-#include <fcntl.h>
 #include "main.h"
 
 /**
- * print_file_contents - reads a text file and prints its contents
- * @filename: pointer to the name of the file to read
- * @num_letters: number of letters to read from the file
- *
- * Description: This function reads a text file and prints its contents to the
- * standard output.
- *
+ * read_textfile - that reads a text file and prints
+ * @filename: variable pointer
+ * @letters: size letters
+ * Description: Write a function that reads a text file and prints it
+ * to the POSIX standard output.
  * Return: the actual number of letters it could read and print, 0 otherwise
  */
-ssize_t print_file_contents(const char *filename, size_t num_letters)
-{
-	ssize_t file, letters_read, bytes_written;
-	char *buffer;
 
-	buffer = malloc(num_letters);
-	if (buffer == NULL)
+ssize_t read_textfile(const char *filename, size_t letters)
+{
+	ssize_t file, let, w;
+	char *text;
+
+	text = malloc(letters);
+	if (text == NULL)
 		return (0);
 
 	if (filename == NULL)
@@ -30,16 +27,15 @@ ssize_t print_file_contents(const char *filename, size_t num_letters)
 
 	if (file == -1)
 	{
-		free(buffer);
+		free(text);
 		return (0);
 	}
 
-	letters_read = read(file, buffer, num_letters);
+	let = read(file, text, letters);
 
-	bytes_written = write(STDOUT_FILENO, buffer, letters_read);
+	w = write(STDOUT_FILENO, text, let);
 
 	close(file);
-	free(buffer);
 
-	return (bytes_written);
+	return (w);
 }
