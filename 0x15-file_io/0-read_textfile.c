@@ -5,29 +5,28 @@
 #include "main.h"
 
 /**
- * print_file - function that reads a text file and prints
- * @file_name: pointer to the name of the file
- * @max_letters: maximum number of letters to print
+ * print_file_contents - reads a text file and prints its contents
+ * @filename: pointer to the name of the file to read
+ * @num_letters: number of letters to read from the file
  *
- * Description: This function reads a text file and prints its content
- * to the POSIX standard output.
+ * Description: This function reads a text file and prints its contents to the
+ * standard output.
  *
- * Return: The number of letters printed, or 0 if it fails
+ * Return: the actual number of letters it could read and print, 0 otherwise
  */
-
-ssize_t print_file(const char *file_name, size_t max_letters)
+ssize_t print_file_contents(const char *filename, size_t num_letters)
 {
-	ssize_t file, read_letters, written_letters;
+	ssize_t file, letters_read, bytes_written;
 	char *buffer;
 
-	buffer = malloc(max_letters);
+	buffer = malloc(num_letters);
 	if (buffer == NULL)
 		return (0);
 
-	if (file_name == NULL)
+	if (filename == NULL)
 		return (0);
 
-	file = open(file_name, O_RDONLY);
+	file = open(filename, O_RDONLY);
 
 	if (file == -1)
 	{
@@ -35,12 +34,12 @@ ssize_t print_file(const char *file_name, size_t max_letters)
 		return (0);
 	}
 
-	read_letters = read(file, buffer, max_letters);
+	letters_read = read(file, buffer, num_letters);
 
-	written_letters = write(STDOUT_FILENO, buffer, read_letters);
+	bytes_written = write(STDOUT_FILENO, buffer, letters_read);
 
 	close(file);
 	free(buffer);
 
-	return (written_letters);
+	return (bytes_written);
 }
